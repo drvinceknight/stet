@@ -2,7 +2,7 @@
 
 A Python library for making parameter sweeps safely resumable.
 
-*Stet* is a Latin proofreading instruction meaning "let it stand" - written beside a
+_Stet_ is a Latin proofreading instruction meaning "let it stand" - written beside a
 correction that should be ignored. When `stet` sees a parameter combination it has
 already run, it does the same: leave it, it's done.
 
@@ -85,18 +85,14 @@ stet.reset(key_dict={'alpha': '0.1', 'seed': '42'})  # remove one entry
 
 ## Storage backends
 
-| Extension | Backend | Notes |
-|-----------|---------|-------|
-| `.csv` | pandas CSV | Default. Human-readable. |
-| `.json` | stdlib json | No extra dependencies. |
-| `.sqlite` | stdlib sqlite3 | Best for large stores and parallel workers. |
-| `.parquet` | pandas + pyarrow | Requires `stet[parquet]`. |
+| Extension  | Backend          | Notes                                       |
+| ---------- | ---------------- | ------------------------------------------- |
+| `.csv`     | pandas CSV       | Default. Human-readable.                    |
+| `.json`    | stdlib json      | No extra dependencies.                      |
+| `.sqlite`  | stdlib sqlite3   | Best for large stores and parallel workers. |
+| `.parquet` | pandas + pyarrow | Requires `stet[parquet]`.                   |
 
 ## Documentation
 
 Full documentation including how-to guides, API reference, and explanation of design
-decisions:
-
-```bash
-uv run mkdocs serve
-```
+decisions: [docs](https://vknight.org/stet/).

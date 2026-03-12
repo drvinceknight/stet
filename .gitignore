@@ -21,3 +21,4 @@ site/
 
 # Default once store files (generated at runtime)
 _once_store.*
+PYPITOKEN

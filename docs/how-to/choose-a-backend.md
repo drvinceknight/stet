@@ -39,9 +39,14 @@ def run(alpha, beta): ...
 
 Requires `once[parquet]`. Compact binary format, fast for large datasets.
 
-```bash
-uv add once[parquet]
-# or: python -m pip install once[parquet]
+```
+$ uv add once[parquet]
+```
+
+or
+
+```
+$ python -m pip install once[parquet]
 ```
 
 ```python

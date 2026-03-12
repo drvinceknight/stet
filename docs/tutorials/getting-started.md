@@ -4,9 +4,14 @@ In this tutorial, you'll install `once`, decorate a simple function, and see the
 
 ## Install
 
-```bash
-uv add once
-# or: python -m pip install once
+```
+$ uv add once
+```
+
+or
+
+```
+$ python -m pip install once
 ```
 
 ## Decorate your function

@@ -1,6 +1,7 @@
 # Use with Multiprocessing
 
-`stet` uses file-level locking via `filelock`, so it is safe to use with `multiprocessing` or `joblib`.
+`stet` uses file-level locking via `filelock`, so it is safe to use with
+`multiprocessing` or `joblib`.
 
 ## With `multiprocessing`
 
@@ -19,7 +20,8 @@ with Pool(processes=4) as pool:
     pool.starmap(run_experiment, params)
 ```
 
-Each worker acquires the file lock before reading or writing, so records are never corrupted.
+Each worker acquires the file lock before reading or writing, so records are never
+corrupted.
 
 ## With `joblib`
 
@@ -36,7 +38,8 @@ Parallel(n_jobs=4)(delayed(run)(x=i) for i in range(100))
 
 ## Recommended backend for parallel workloads
 
-SQLite is recommended for parallel workloads — it has better concurrent write performance than CSV or JSON. Use:
+SQLite is recommended for parallel workloads; it has better concurrent write performance
+than CSV or JSON. Use:
 
 ```python
 @stet.once(store='results.sqlite', key=['alpha', 'seed'])

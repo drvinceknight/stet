@@ -25,7 +25,7 @@ class CsvBackend(BaseBackend):
 
         backend = CsvBackend(Path('_stet_store.csv'))
         backend.record({'alpha': 0.1, 'beta': 2})
-        backend.has({'alpha': 0.1, 'beta': 2})  # True
+        backend.has({'alpha': 0.1, 'beta': 2})
         ```
     """
 

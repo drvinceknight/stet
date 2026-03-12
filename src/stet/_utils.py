@@ -69,13 +69,8 @@ def reset(
 
     Example:
         ```python
-        # Remove one entry from the default store
         stet.reset(key_dict={'alpha': '0.1', 'beta': '2'})
-
-        # Clear the default store entirely (prompts interactively)
         stet.reset()
-
-        # Clear a named store
         stet.reset('markov_runs.csv')
         ```
     """

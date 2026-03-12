@@ -1,6 +1,7 @@
 # Import Existing Results into a Store
 
-If you have already run experiments and have results in a data file, you can pre-populate a `stet` store so that those runs are skipped when you restart.
+If you have already run experiments and have results in a data file, you can
+pre-populate a `stet` store so that those runs are skipped when you restart.
 
 ## The situation
 
@@ -13,11 +14,13 @@ alpha,seed,mse
 0.2,0,0.51
 ```
 
-You now want to decorate your experiment function with `@once` and re-run your full sweep, but without repeating the work already done.
+You now want to decorate your experiment function with `@once` and re-run your full
+sweep, but without repeating the work already done.
 
 ## Step 1: Pre-populate the store
 
-Use the backend directly to record each parameter combination present in your existing data:
+Use the backend directly to record each parameter combination present in your existing
+data:
 
 ```python
 import pandas as pd
@@ -31,7 +34,8 @@ for _, row in df.iterrows():
     backend.record({"alpha": row["alpha"], "seed": row["seed"]})
 ```
 
-Only include the parameter columns — not result columns like `mse`. The store tracks which parameter combinations have been run, not what they produced.
+Only include the parameter columns, not result columns like `mse`. The store tracks
+which parameter combinations have been run, not what they produced.
 
 ## Step 2: Decorate and re-run
 
@@ -51,7 +55,9 @@ Combinations already in the store are skipped; only the missing ones execute.
 
 ## Matching parameter names and values
 
-The parameter names used in `backend.record()` must match the names `stet` extracts from your function — which are the argument names unless you override them with `key=`. Values are stored as strings internally, so `0.1` and `"0.1"` are treated the same.
+The parameter names used in `backend.record()` must match the names `stet` extracts from
+your function, which are the argument names unless you override them with `key=`. Values
+are stored as strings internally, so `0.1` and `"0.1"` are treated the same.
 
 You can verify the store looks correct before re-running:
 
@@ -61,4 +67,5 @@ import stet
 stet.status()
 ```
 
-See [Inspect a Store](inspect-and-reset-a-store.md) for more detail on reading store contents.
+See [Inspect a Store](inspect-and-reset-a-store.md) for more detail on reading store
+contents.

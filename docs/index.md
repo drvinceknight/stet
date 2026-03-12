@@ -1,12 +1,19 @@
 # stet
 
-**stet** is a Python library that solves a common problem in computational research: when a long-running experiment script is re-run — whether after a crash, a time limit, or deliberately to extend a sweep — it should automatically skip any experiments that have already been completed.
+**stet** is a Python library that solves a common problem in computational research:
+when a long-running experiment script is re-run, whether after a crash, a time limit, or
+deliberately to extend a sweep, it should automatically skip any experiments that have
+already been completed.
 
-*Stet* is a Latin proofreading instruction meaning "let it stand" — written beside a correction that should be ignored. When `stet` sees a parameter combination it has already run, it does the same: leave it, it's done.
+*Stet* is a Latin proofreading instruction meaning "let it stand" - written beside a
+correction that should be ignored. When `stet` sees a parameter combination it has
+already run, it does the same: leave it, it's done.
 
 ## The Problem
 
-You're running a parameter sweep over thousands of combinations. Your script stops — maybe it crashed, maybe you killed it, maybe you just want to add more parameter values. You restart it and it starts over from the beginning, re-running everything.
+You're running a parameter sweep over thousands of combinations. Your script stops.
+Maybe it crashed, maybe you killed it, maybe you just want to add more parameter values.
+You restart it and it starts over from the beginning, re-running everything.
 
 ## The Solution
 
@@ -30,7 +37,8 @@ for alpha in np.linspace(0.01, 1.0, 50):
             solve_markov(alpha=alpha, n_states=n_states, seed=seed)
 ```
 
-On restart, any already-completed `(alpha, n_states, seed)` combinations are skipped automatically.
+On restart, any already-completed `(alpha, n_states, seed)` combinations are skipped
+automatically.
 
 ## Installation
 
@@ -57,4 +65,5 @@ def run_experiment(alpha, beta, n_steps=1000):
     pass
 ```
 
-See the [Getting Started tutorial](tutorials/getting-started.md) for a complete walkthrough.
+See the [Getting Started tutorial](tutorials/getting-started.md) for a complete
+walkthrough.

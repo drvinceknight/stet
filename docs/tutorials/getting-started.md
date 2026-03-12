@@ -1,6 +1,7 @@
 # Getting Started
 
-In this tutorial, you'll install `stet`, decorate a simple function, and see the skip behaviour in action.
+In this tutorial, you'll install `stet`, decorate a simple function, and see the skip
+behaviour in action.
 
 ## Install
 
@@ -55,7 +56,10 @@ for alpha, seed in params:
 [stet] Skipping run_experiment(alpha=0.5, seed=1)
 ```
 
-On the second run, every experiment is skipped because the `(alpha, seed)` combinations are already in `_stet_store.csv` (the default store, created automatically in your working directory). This works whether the script was stopped by a crash, a time limit, or deliberately.
+On the second run, every experiment is skipped because the `(alpha, seed)` combinations
+are already in `_stet_store.csv` (the default store, created automatically in your
+working directory). This works whether the script was stopped by a crash, a time limit,
+or deliberately.
 
 ## Check progress
 
@@ -65,10 +69,10 @@ stet.status()
 ```
 
 ```
-[stet] Store: _stet_store.csv  ← created automatically in your working directory
+[stet] Store: _stet_store.csv  # created automatically in your working directory
 [stet] 3 completed experiments recorded
 [stet] Last run: 2024-11-03T14:22:01
 [stet] Key columns: alpha, seed
 ```
 
-Congratulations — you've seen the core feature of `stet` in action!
+Congratulations! You've seen the core feature of `stet` in action!

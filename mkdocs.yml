@@ -33,6 +33,7 @@ nav:
     - Resume a Sweep: how-to/recover-from-a-crash.md
     - Choose a Backend: how-to/choose-a-backend.md
     - Use with Multiprocessing: how-to/use-with-multiprocessing.md
+    - Import Existing Results: how-to/import-existing-results.md
   - Reference:
     - API: reference/api.md
   - Explanation:

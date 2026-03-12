@@ -1,6 +1,6 @@
 [project]
 name = "stet"
-version = "0.0.1"
+version = "0.0.2"
 description = "Persistent memoization by parameter identity for experiment scripts"
 readme = "README.md"
 authors = [

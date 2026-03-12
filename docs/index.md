@@ -32,14 +32,16 @@ On restart, any already-completed `(alpha, n_states, seed)` combinations are ski
 
 ## Installation
 
-```bash
-# with uv (recommended)
-uv add once
-uv add once[parquet]  # with parquet support
+```
+$ uv add once
+$ uv add once[parquet]  # with parquet support
+```
 
-# with pip
-python -m pip install once
-python -m pip install once[parquet]  # with parquet support
+or
+
+```
+$ python -m pip install once
+$ python -m pip install once[parquet]  # with parquet support
 ```
 
 ## Quick Start

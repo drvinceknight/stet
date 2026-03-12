@@ -56,8 +56,8 @@ For most experiment sweeps the overhead is negligible — a skip check under 1 m
 
 The benchmarking script lives at `benchmarks/run_benchmarks.py`:
 
-```bash
-uv run python benchmarks/run_benchmarks.py
+```
+$ uv run python benchmarks/run_benchmarks.py
 ```
 
 It re-generates the plots in `docs/img/`.

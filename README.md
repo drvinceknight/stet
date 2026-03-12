@@ -2,7 +2,13 @@
 
 A Python library for making parameter sweeps safely resumable.
 
-When a long-running experiment script is re-run — whether after a crash, a time limit, or deliberately to extend a sweep — `stet` automatically skips any parameter combinations that have already been completed.
+*Stet* is a Latin proofreading instruction meaning "let it stand" - written beside a
+correction that should be ignored. When `stet` sees a parameter combination it has
+already run, it does the same: leave it, it's done.
+
+When a long-running experiment script is re-run, whether after a crash, a time limit, or
+deliberately to extend a sweep, `stet` automatically skips any parameter combinations
+that have already been completed.
 
 ```python
 import stet
@@ -42,7 +48,8 @@ uv add stet[parquet]
 
 ## Usage
 
-**Zero config** — uses `_stet_store.csv` in the current directory, all parameters as the key:
+**Zero config**: uses `_stet_store.csv` in the current directory, all parameters as the
+key:
 
 ```python
 @stet.once
@@ -50,7 +57,8 @@ def run_experiment(alpha, seed):
     ...
 ```
 
-**Named store** — backend selected from file extension (`.csv`, `.json`, `.sqlite`, `.parquet`):
+**Named store**: backend selected from file extension (`.csv`, `.json`, `.sqlite`,
+`.parquet`):
 
 ```python
 @stet.once(store='runs.sqlite')
@@ -58,7 +66,8 @@ def run_experiment(alpha, seed):
     ...
 ```
 
-**Key subset** — only `alpha` and `seed` determine whether a run is skipped; `n_iter` is ignored:
+**Key subset**: only `alpha` and `seed` determine whether a run is skipped; `n_iter` is
+ignored:
 
 ```python
 @stet.once(store='runs.csv', key=['alpha', 'seed'])
@@ -85,7 +94,8 @@ stet.reset(key_dict={'alpha': '0.1', 'seed': '42'})  # remove one entry
 
 ## Documentation
 
-Full documentation including how-to guides, API reference, and explanation of design decisions:
+Full documentation including how-to guides, API reference, and explanation of design
+decisions:
 
 ```bash
 uv run mkdocs serve

@@ -71,24 +71,24 @@ def once(
     """Decorator that skips already-completed experiment runs.
 
     Tracks which parameter combinations have been executed and skips them
-    on subsequent calls. The function's return value is not saved — only
+    on subsequent calls. The function's return value is not saved; only
     whether the combination has been run.
 
     Can be used in three styles:
 
-    Style 1 — zero config::
+    Style 1 - zero config::
 
         @once
         def run_experiment(alpha, beta):
             ...
 
-    Style 2 — specify store::
+    Style 2 - specify store::
 
         @once(store='_stet_store.csv')
         def run_experiment(alpha, beta):
             ...
 
-    Style 3 — full control::
+    Style 3 - full control::
 
         @once(store='_stet_store.csv', key=['alpha', 'beta'])
         def run_experiment(alpha, beta, n_steps):
@@ -109,18 +109,15 @@ def once(
         ```python
         @once(store='_stet_store.csv', key=['alpha', 'seed'])
         def run_experiment(alpha, seed, n_iter=1000):
-            # expensive computation
             pass
 
-        run_experiment(alpha=0.1, seed=42)  # runs
-        run_experiment(alpha=0.1, seed=42)  # skipped
+        run_experiment(alpha=0.1, seed=42)
+        run_experiment(alpha=0.1, seed=42)
         ```
     """
     decorator = _OnceDecorator(store=store, key=key)
 
     if func is not None:
-        # Used as @once (no parentheses)
         return decorator(func)
 
-    # Used as @once(...) — return the decorator
     return decorator

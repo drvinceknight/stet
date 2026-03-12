@@ -24,10 +24,10 @@ def get_backend(path: Path) -> BaseBackend:
 
     The backend is selected based on the file extension:
 
-    - ``.csv`` → :class:`~stet.backends._csv.CsvBackend`
-    - ``.parquet`` → :class:`~stet.backends._parquet.ParquetBackend`
-    - ``.sqlite`` / ``.db`` → :class:`~stet.backends._sqlite.SqliteBackend`
-    - ``.json`` → :class:`~stet.backends._json.JsonBackend`
+    - ``.csv``: :class:`~stet.backends._csv.CsvBackend`
+    - ``.parquet``: :class:`~stet.backends._parquet.ParquetBackend`
+    - ``.sqlite`` / ``.db``: :class:`~stet.backends._sqlite.SqliteBackend`
+    - ``.json``: :class:`~stet.backends._json.JsonBackend`
 
     Args:
         path: Path to the store file.

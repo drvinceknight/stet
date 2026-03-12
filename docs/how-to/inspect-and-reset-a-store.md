@@ -20,7 +20,8 @@ Output:
 
 ## Inspect the store directly
 
-The store is a plain file — you can load it as a list of dicts and work with it however you like:
+The store is a plain file; you can load it as a list of dicts and work with it however
+you like:
 
 ```python
 from stet.backends import get_backend

@@ -29,7 +29,7 @@ class SqliteBackend(BaseBackend):
 
         backend = SqliteBackend(Path('_stet_store.sqlite'))
         backend.record({'alpha': 0.1, 'beta': 2})
-        backend.has({'alpha': 0.1, 'beta': 2})  # True
+        backend.has({'alpha': 0.1, 'beta': 2})
         ```
     """
 

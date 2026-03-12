@@ -27,7 +27,7 @@ class JsonBackend(BaseBackend):
 
         backend = JsonBackend(Path('_stet_store.json'))
         backend.record({'alpha': 0.1, 'beta': 2})
-        backend.has({'alpha': 0.1, 'beta': 2})  # True
+        backend.has({'alpha': 0.1, 'beta': 2})
         ```
     """
 

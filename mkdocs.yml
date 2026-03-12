@@ -1,4 +1,4 @@
-site_name: once
+site_name: stet
 theme:
   name: material
   logo: img/logo.svg
@@ -45,6 +45,6 @@ nav:
   - Reference:
     - API: reference/api.md
   - Explanation:
-    - How once Works: explanation/how-once-works.md
+    - How stet Works: explanation/how-once-works.md
     - Related Libraries: explanation/related-libraries.md
     - Performance: explanation/performance.md

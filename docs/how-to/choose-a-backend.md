@@ -1,13 +1,13 @@
 # Choose a Backend
 
-`once` supports four storage backends. The backend is selected automatically from the file extension you pass to `store=`.
+`stet` supports four storage backends. The backend is selected automatically from the file extension you pass to `store=`.
 
 ## CSV (`.csv`)
 
 The default. Human-readable, easy to inspect in a spreadsheet.
 
 ```python
-@once.once(store='_once_store.csv')
+@stet.once(store='_stet_store.csv')
 def run(alpha, beta): ...
 ```
 
@@ -18,7 +18,7 @@ def run(alpha, beta): ...
 Pure Python, no extra dependencies beyond `filelock`.
 
 ```python
-@once.once(store='_once_store.json')
+@stet.once(store='_stet_store.json')
 def run(alpha, beta): ...
 ```
 
@@ -29,7 +29,7 @@ def run(alpha, beta): ...
 Robust, concurrent-friendly, query-able with standard SQL tools.
 
 ```python
-@once.once(store='_once_store.sqlite')
+@stet.once(store='_stet_store.sqlite')
 def run(alpha, beta): ...
 ```
 
@@ -37,20 +37,20 @@ def run(alpha, beta): ...
 
 ## Parquet (`.parquet`)
 
-Requires `once[parquet]`. Compact binary format, fast for large datasets.
+Requires `stet[parquet]`. Compact binary format, fast for large datasets.
 
 ```
-$ uv add once[parquet]
+$ uv add stet[parquet]
 ```
 
 or
 
 ```
-$ python -m pip install once[parquet]
+$ python -m pip install stet[parquet]
 ```
 
 ```python
-@once.once(store='_once_store.parquet')
+@stet.once(store='_stet_store.parquet')
 def run(alpha, beta): ...
 ```
 
@@ -63,4 +63,4 @@ def run(alpha, beta): ...
 | CSV     | Any text editor          | —              | No                    |
 | JSON    | Any text editor          | —              | No                    |
 | SQLite  | DB browser / sqlite3 CLI | —              | Yes                   |
-| Parquet | pandas / DuckDB          | `once[parquet]` | Yes                  |
+| Parquet | pandas / DuckDB          | `stet[parquet]` | Yes                  |

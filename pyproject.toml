@@ -1,5 +1,5 @@
 [project]
-name = "once"
+name = "stet"
 version = "0.0.1"
 description = "Persistent memoization by parameter identity for experiment scripts"
 readme = "README.md"
@@ -42,4 +42,4 @@ select = ["E", "F", "I", "UP"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--tb=short --cov=once --cov-fail-under=100 --cov-report=term-missing"
+addopts = "--tb=short --cov=stet --cov-fail-under=100 --cov-report=term-missing"

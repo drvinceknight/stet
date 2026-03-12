@@ -1,4 +1,4 @@
-"""Tests for once._utils (status and reset)."""
+"""Tests for stet._utils (status and reset)."""
 
 from __future__ import annotations
 
@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pytest
 
-import once
+import stet
 
 
 def test_status_missing_file(tmp_path: Path) -> None:
     with pytest.raises(FileNotFoundError):
-        once.status(tmp_path / "nonexistent.csv")
+        stet.status(tmp_path / "nonexistent.csv")
 
 
 def test_status_default_store(
@@ -19,12 +19,12 @@ def test_status_default_store(
 ) -> None:
     monkeypatch.chdir(tmp_path)
 
-    @once.once
+    @stet.once
     def run(x: int) -> None:
         pass
 
     run(x=1)
-    once.status()
+    stet.status()
     out = capsys.readouterr().out
     assert "1 completed" in out
 
@@ -32,24 +32,24 @@ def test_status_default_store(
 def test_reset_default_store(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.chdir(tmp_path)
 
-    @once.once
+    @stet.once
     def run(x: int) -> None:
         pass
 
     run(x=1)
-    once.reset()
-    assert not (tmp_path / "_once_store.csv").exists()
+    stet.reset()
+    assert not (tmp_path / "_stet_store.csv").exists()
 
 
 def test_status_csv(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     store = tmp_path / "results.csv"
 
-    @once.once(store=store, key=["alpha"])
+    @stet.once(store=store, key=["alpha"])
     def run(alpha: float, beta: int) -> None:
         pass
 
     run(alpha=0.1, beta=1)
-    once.status(store)
+    stet.status(store)
     out = capsys.readouterr().out
     assert "1 completed" in out
     assert "alpha" in out
@@ -60,13 +60,13 @@ def test_status_shows_last_run(
 ) -> None:
     store = tmp_path / "results.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def run(x: int) -> None:
         pass
 
     run(x=1)
     run(x=2)
-    once.status(store)
+    stet.status(store)
     out = capsys.readouterr().out
     assert "2 completed" in out
     assert "Last run" in out
@@ -75,30 +75,30 @@ def test_status_shows_last_run(
 def test_reset_all(tmp_path: Path) -> None:
     store = tmp_path / "results.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def run(x: int) -> None:
         pass
 
     run(x=1)
     run(x=2)
 
-    once.reset(store)
+    stet.reset(store)
     assert not store.exists()
 
 
 def test_reset_specific_key(tmp_path: Path) -> None:
     store = tmp_path / "results.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def run(x: int) -> None:
         pass
 
     run(x=1)
     run(x=2)
 
-    once.reset(store, {"x": "1"})
+    stet.reset(store, {"x": "1"})
 
-    from once.backends import get_backend
+    from stet.backends import get_backend
 
     backend = get_backend(store)
     records = backend.load()
@@ -113,12 +113,12 @@ def test_reset_all_noninteractive(
     """In non-interactive mode (stdin not a tty) reset should not prompt."""
     store = tmp_path / "results.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def run(x: int) -> None:
         pass
 
     run(x=5)
-    once.reset(store)
+    stet.reset(store)
     out = capsys.readouterr().out
     assert "cleared" in out
 
@@ -129,7 +129,7 @@ def test_reset_all_interactive_yes(
     """Interactive reset with 'y' clears the store."""
     store = tmp_path / "results.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def run(x: int) -> None:
         pass
 
@@ -137,7 +137,7 @@ def test_reset_all_interactive_yes(
     fake_tty = type("FakeTTY", (), {"isatty": lambda self: True})()
     monkeypatch.setattr("sys.stdin", fake_tty)
     monkeypatch.setattr("builtins.input", lambda _: "y")
-    once.reset(store)
+    stet.reset(store)
     assert not store.exists()
     out = capsys.readouterr().out
     assert "cleared" in out
@@ -149,7 +149,7 @@ def test_reset_all_interactive_no(
     """Interactive reset with 'n' aborts without clearing."""
     store = tmp_path / "results.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def run(x: int) -> None:
         pass
 
@@ -157,7 +157,7 @@ def test_reset_all_interactive_no(
     fake_tty = type("FakeTTY", (), {"isatty": lambda self: True})()
     monkeypatch.setattr("sys.stdin", fake_tty)
     monkeypatch.setattr("builtins.input", lambda _: "n")
-    once.reset(store)
+    stet.reset(store)
     assert store.exists()
     out = capsys.readouterr().out
     assert "Aborted" in out

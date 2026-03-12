@@ -1,13 +1,13 @@
-"""Storage backends for the once library."""
+"""Storage backends for the stet library."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
-from once.backends._base import BaseBackend
-from once.backends._csv import CsvBackend
-from once.backends._json import JsonBackend
-from once.backends._sqlite import SqliteBackend
+from stet.backends._base import BaseBackend
+from stet.backends._csv import CsvBackend
+from stet.backends._json import JsonBackend
+from stet.backends._sqlite import SqliteBackend
 
 __all__ = ["BaseBackend", "CsvBackend", "JsonBackend", "SqliteBackend", "get_backend"]
 
@@ -24,10 +24,10 @@ def get_backend(path: Path) -> BaseBackend:
 
     The backend is selected based on the file extension:
 
-    - ``.csv`` → :class:`~once.backends._csv.CsvBackend`
-    - ``.parquet`` → :class:`~once.backends._parquet.ParquetBackend`
-    - ``.sqlite`` / ``.db`` → :class:`~once.backends._sqlite.SqliteBackend`
-    - ``.json`` → :class:`~once.backends._json.JsonBackend`
+    - ``.csv`` → :class:`~stet.backends._csv.CsvBackend`
+    - ``.parquet`` → :class:`~stet.backends._parquet.ParquetBackend`
+    - ``.sqlite`` / ``.db`` → :class:`~stet.backends._sqlite.SqliteBackend`
+    - ``.json`` → :class:`~stet.backends._json.JsonBackend`
 
     Args:
         path: Path to the store file.
@@ -41,7 +41,7 @@ def get_backend(path: Path) -> BaseBackend:
     ext = path.suffix.lower()
 
     if ext == ".parquet":
-        from once.backends._parquet import ParquetBackend
+        from stet.backends._parquet import ParquetBackend
 
         return ParquetBackend(path)
 

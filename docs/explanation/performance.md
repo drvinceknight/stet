@@ -1,6 +1,6 @@
 # Performance
 
-The dominant cost in `once` is store I/O — reading the store to check whether a key exists, and writing to it when recording a new run.
+The dominant cost in `stet` is store I/O — reading the store to check whether a key exists, and writing to it when recording a new run.
 
 ## What was measured
 
@@ -49,7 +49,7 @@ Results on different hardware will vary, but the relative shape — SQLite stayi
 
 For most experiment sweeps the overhead is negligible — a skip check under 1 ms is undetectable against any function that does real work. But it becomes relevant in two situations:
 
-- **Very fast functions** (sub-millisecond): the overhead can dominate. Consider batching or restructuring so that `once` wraps a coarser unit of work.
+- **Very fast functions** (sub-millisecond): the overhead can dominate. Consider batching or restructuring so that `stet` wraps a coarser unit of work.
 - **Very large stores with file-based backends**: at 5,000+ records, CSV and JSON become noticeably slow. Switch to SQLite if your store will grow large, especially in combination with parallel workers (see [Use with Multiprocessing](../how-to/use-with-multiprocessing.md)).
 
 ## Reproducing these results

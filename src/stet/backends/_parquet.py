@@ -8,23 +8,23 @@ from typing import Any
 
 import filelock
 
-from once.backends._base import BaseBackend
+from stet.backends._base import BaseBackend
 
 
 class ParquetBackend(BaseBackend):
     """Store experiment records in a Parquet file using pandas and pyarrow.
 
-    Requires the ``parquet`` extra: ``uv add once[parquet]``.
+    Requires the ``parquet`` extra: ``uv add stet[parquet]``.
 
     Args:
         path: Path to the ``.parquet`` file. Created on first write.
 
     Example:
         ```python
-        from once.backends._parquet import ParquetBackend
+        from stet.backends._parquet import ParquetBackend
         from pathlib import Path
 
-        backend = ParquetBackend(Path('_once_store.parquet'))
+        backend = ParquetBackend(Path('_stet_store.parquet'))
         backend.record({'alpha': 0.1, 'beta': 2})
         backend.has({'alpha': 0.1, 'beta': 2})  # True
         ```
@@ -72,7 +72,7 @@ class ParquetBackend(BaseBackend):
         import pandas as pd
 
         row = {k: str(v) for k, v in key_dict.items()}
-        row["_once_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
+        row["_stet_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
         with self._lock:
             df = self._read()
             new_row = pd.DataFrame([row])

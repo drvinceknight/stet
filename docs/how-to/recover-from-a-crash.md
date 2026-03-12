@@ -1,6 +1,6 @@
 # Resume a Sweep
 
-Whether your script stopped because of a crash, a time limit, or a deliberate interruption, simply restart it. `once` will skip every combination already in the store and pick up where it left off:
+Whether your script stopped because of a crash, a time limit, or a deliberate interruption, simply restart it. `stet` will skip every combination already in the store and pick up where it left off:
 
 ```python
 for alpha in alphas:
@@ -13,7 +13,7 @@ This also works when you extend a sweep — for example, adding new values to `a
 To minimise the risk of output and store getting out of sync, write output *after* the decorated function returns rather than inside it:
 
 ```python
-@once.once(key=['alpha', 'seed'])
+@stet.once(key=['alpha', 'seed'])
 def run_experiment(alpha, seed):
     return compute_result(alpha, seed)
 
@@ -24,4 +24,4 @@ for alpha in alphas:
             write_output(result)
 ```
 
-See [How once Works](../explanation/how-once-works.md) for a fuller discussion of the two-file design.
+See [How stet Works](../explanation/how-once-works.md) for a fuller discussion of the two-file design.

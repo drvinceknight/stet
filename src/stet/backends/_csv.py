@@ -9,7 +9,7 @@ from typing import Any
 import filelock
 import pandas as pd
 
-from once.backends._base import BaseBackend
+from stet.backends._base import BaseBackend
 
 
 class CsvBackend(BaseBackend):
@@ -20,10 +20,10 @@ class CsvBackend(BaseBackend):
 
     Example:
         ```python
-        from once.backends import CsvBackend
+        from stet.backends import CsvBackend
         from pathlib import Path
 
-        backend = CsvBackend(Path('_once_store.csv'))
+        backend = CsvBackend(Path('_stet_store.csv'))
         backend.record({'alpha': 0.1, 'beta': 2})
         backend.has({'alpha': 0.1, 'beta': 2})  # True
         ```
@@ -67,7 +67,7 @@ class CsvBackend(BaseBackend):
             key_dict: Parameter names and values to record.
         """
         row = {k: str(v) for k, v in key_dict.items()}
-        row["_once_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
+        row["_stet_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
         with self._lock:
             df = self._read()
             new_row = pd.DataFrame([row])

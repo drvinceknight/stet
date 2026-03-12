@@ -8,7 +8,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from once.backends import get_backend
+from stet.backends import get_backend
 
 
 def _bind_args(
@@ -52,7 +52,7 @@ class _OnceDecorator:
 
             if backend.has(key_dict):
                 label = _format_key(getattr(func, "__name__", repr(func)), key_dict)
-                print(f"[once] Skipping {label}")
+                print(f"[stet] Skipping {label}")
                 return None
 
             result = func(*args, **kwargs)
@@ -65,7 +65,7 @@ class _OnceDecorator:
 def once(
     func: Callable[..., Any] | None = None,
     *,
-    store: str | Path = "_once_store.csv",
+    store: str | Path = "_stet_store.csv",
     key: list[str] | None = None,
 ) -> Any:
     """Decorator that skips already-completed experiment runs.
@@ -84,13 +84,13 @@ def once(
 
     Style 2 — specify store::
 
-        @once(store='_once_store.csv')
+        @once(store='_stet_store.csv')
         def run_experiment(alpha, beta):
             ...
 
     Style 3 — full control::
 
-        @once(store='_once_store.csv', key=['alpha', 'beta'])
+        @once(store='_stet_store.csv', key=['alpha', 'beta'])
         def run_experiment(alpha, beta, n_steps):
             ...
 
@@ -98,7 +98,7 @@ def once(
         func: The function to decorate (when used without parentheses).
         store: Path to the store file. Backend is inferred from extension:
             ``.csv``, ``.parquet``, ``.sqlite``, ``.json``.
-            Defaults to ``_once_store.csv`` in the current directory.
+            Defaults to ``_stet_store.csv`` in the current directory.
         key: Parameter names that uniquely identify a run. If omitted,
             all parameters are used.
 
@@ -107,7 +107,7 @@ def once(
 
     Example:
         ```python
-        @once(store='_once_store.csv', key=['alpha', 'seed'])
+        @once(store='_stet_store.csv', key=['alpha', 'seed'])
         def run_experiment(alpha, seed, n_iter=1000):
             # expensive computation
             pass

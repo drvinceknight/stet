@@ -6,14 +6,14 @@ from pathlib import Path
 
 import pytest
 
-import once
+import stet
 
 
 def test_runs_once(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
     call_count = 0
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def experiment(x: int) -> None:
         nonlocal call_count
         call_count += 1
@@ -27,7 +27,7 @@ def test_runs_different_params(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
     call_count = 0
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def experiment(x: int) -> None:
         nonlocal call_count
         call_count += 1
@@ -41,7 +41,7 @@ def test_key_subset(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
     call_count = 0
 
-    @once.once(store=store, key=["alpha"])
+    @stet.once(store=store, key=["alpha"])
     def experiment(alpha: float, n_iter: int = 100) -> None:
         nonlocal call_count
         call_count += 1
@@ -55,7 +55,7 @@ def test_no_parentheses(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None
     monkeypatch.chdir(tmp_path)
     call_count = 0
 
-    @once.once
+    @stet.once
     def experiment(x: int) -> None:
         nonlocal call_count
         call_count += 1
@@ -68,20 +68,20 @@ def test_no_parentheses(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None
 def test_skip_message(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     store = tmp_path / "store.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def my_func(a: int) -> None:
         pass
 
     my_func(a=1)
     my_func(a=1)
     out = capsys.readouterr().out
-    assert "[once] Skipping my_func" in out
+    assert "[stet] Skipping my_func" in out
 
 
 def test_return_value_passthrough(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def experiment(x: int) -> int:
         return x * 2
 
@@ -92,7 +92,7 @@ def test_return_value_passthrough(tmp_path: Path) -> None:
 def test_second_call_returns_none(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def experiment(x: int) -> int:
         return x * 2
 
@@ -105,7 +105,7 @@ def test_positional_args(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
     call_count = 0
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def experiment(x: int, y: int) -> None:
         nonlocal call_count
         call_count += 1
@@ -119,7 +119,7 @@ def test_defaults_included_in_key(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
     call_count = 0
 
-    @once.once(store=store)
+    @stet.once(store=store)
     def experiment(x: int, y: int = 10) -> None:
         nonlocal call_count
         call_count += 1

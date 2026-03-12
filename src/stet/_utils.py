@@ -1,4 +1,4 @@
-"""Utility functions for inspecting and managing once stores."""
+"""Utility functions for inspecting and managing stet stores."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from once.backends import get_backend
+from stet.backends import get_backend
 
-_DEFAULT_STORE = "_once_store.csv"
+_DEFAULT_STORE = "_stet_store.csv"
 
 
 def status(store_path: str | Path = _DEFAULT_STORE) -> None:
@@ -16,18 +16,18 @@ def status(store_path: str | Path = _DEFAULT_STORE) -> None:
 
     Args:
         store_path: Path to the store file (any supported extension).
-            Defaults to ``_once_store.csv`` in the current directory.
+            Defaults to ``_stet_store.csv`` in the current directory.
 
     Raises:
         FileNotFoundError: If the store file does not exist.
 
     Example:
         ```python
-        once.status()
-        # [once] Store: _once_store.csv
-        # [once] 42 completed experiments recorded
-        # [once] Last run: 2024-11-03T14:22:01
-        # [once] Key columns: alpha, beta
+        stet.status()
+        # [stet] Store: _stet_store.csv
+        # [stet] 42 completed experiments recorded
+        # [stet] Last run: 2024-11-03T14:22:01
+        # [stet] Key columns: alpha, beta
         ```
     """
     path = Path(store_path)
@@ -37,21 +37,21 @@ def status(store_path: str | Path = _DEFAULT_STORE) -> None:
     backend = get_backend(path)
     records = backend.load()
 
-    print(f"[once] Store: {path}")
-    print(f"[once] {len(records)} completed experiments recorded")
+    print(f"[stet] Store: {path}")
+    print(f"[stet] {len(records)} completed experiments recorded")
 
     if records:
         timestamps = [
-            r["_once_timestamp"]
+            r["_stet_timestamp"]
             for r in records
-            if "_once_timestamp" in r and r["_once_timestamp"]
+            if "_stet_timestamp" in r and r["_stet_timestamp"]
         ]
         if timestamps:
-            print(f"[once] Last run: {max(timestamps)}")
+            print(f"[stet] Last run: {max(timestamps)}")
 
-        key_cols = [k for k in records[0] if k != "_once_timestamp"]
+        key_cols = [k for k in records[0] if k != "_stet_timestamp"]
         if key_cols:
-            print(f"[once] Key columns: {', '.join(key_cols)}")
+            print(f"[stet] Key columns: {', '.join(key_cols)}")
 
 
 def reset(
@@ -61,7 +61,7 @@ def reset(
     """Remove entries from a store.
 
     Args:
-        store_path: Path to the store file. Defaults to ``_once_store.csv``
+        store_path: Path to the store file. Defaults to ``_stet_store.csv``
             in the current directory.
         key_dict: If provided, remove only this specific key combination.
             If None, clear the entire store (prompts for confirmation
@@ -70,13 +70,13 @@ def reset(
     Example:
         ```python
         # Remove one entry from the default store
-        once.reset(key_dict={'alpha': '0.1', 'beta': '2'})
+        stet.reset(key_dict={'alpha': '0.1', 'beta': '2'})
 
         # Clear the default store entirely (prompts interactively)
-        once.reset()
+        stet.reset()
 
         # Clear a named store
-        once.reset('markov_runs.csv')
+        stet.reset('markov_runs.csv')
         ```
     """
     path = Path(store_path)
@@ -85,13 +85,13 @@ def reset(
     if key_dict is None:
         if sys.stdin.isatty():
             answer = (
-                input(f"[once] Clear all records in {path}? [y/N] ").strip().lower()
+                input(f"[stet] Clear all records in {path}? [y/N] ").strip().lower()
             )
             if answer != "y":
-                print("[once] Aborted.")
+                print("[stet] Aborted.")
                 return
         backend.clear()
-        print(f"[once] Store cleared: {path}")
+        print(f"[stet] Store cleared: {path}")
     else:
         backend.remove(key_dict)
-        print(f"[once] Removed entry: {key_dict}")
+        print(f"[stet] Removed entry: {key_dict}")

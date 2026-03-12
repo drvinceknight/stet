@@ -9,7 +9,7 @@ from typing import Any
 
 import filelock
 
-from once.backends._base import BaseBackend
+from stet.backends._base import BaseBackend
 
 
 class JsonBackend(BaseBackend):
@@ -22,10 +22,10 @@ class JsonBackend(BaseBackend):
 
     Example:
         ```python
-        from once.backends._json import JsonBackend
+        from stet.backends._json import JsonBackend
         from pathlib import Path
 
-        backend = JsonBackend(Path('_once_store.json'))
+        backend = JsonBackend(Path('_stet_store.json'))
         backend.record({'alpha': 0.1, 'beta': 2})
         backend.has({'alpha': 0.1, 'beta': 2})  # True
         ```
@@ -70,7 +70,7 @@ class JsonBackend(BaseBackend):
             key_dict: Parameter names and values to record.
         """
         row: dict[str, Any] = {k: str(v) for k, v in key_dict.items()}
-        row["_once_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
+        row["_stet_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
         with self._lock:
             records = self._read()
             records.append(row)

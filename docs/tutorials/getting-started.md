@@ -1,25 +1,25 @@
 # Getting Started
 
-In this tutorial, you'll install `once`, decorate a simple function, and see the skip behaviour in action.
+In this tutorial, you'll install `stet`, decorate a simple function, and see the skip behaviour in action.
 
 ## Install
 
 ```
-$ uv add once
+$ uv add stet
 ```
 
 or
 
 ```
-$ python -m pip install once
+$ python -m pip install stet
 ```
 
 ## Decorate your function
 
 ```python
-import once
+import stet
 
-@once.once
+@stet.once
 def run_experiment(alpha, seed, n_iter=500):
     print(f"  Running alpha={alpha}, seed={seed}")
     # simulate work
@@ -50,25 +50,25 @@ for alpha, seed in params:
   Running alpha=0.5, seed=1
 
 === Second run ===
-[once] Skipping run_experiment(alpha=0.1, seed=1)
-[once] Skipping run_experiment(alpha=0.1, seed=2)
-[once] Skipping run_experiment(alpha=0.5, seed=1)
+[stet] Skipping run_experiment(alpha=0.1, seed=1)
+[stet] Skipping run_experiment(alpha=0.1, seed=2)
+[stet] Skipping run_experiment(alpha=0.5, seed=1)
 ```
 
-On the second run, every experiment is skipped because the `(alpha, seed)` combinations are already in `_once_store.csv` (the default store, created automatically in your working directory). This works whether the script was stopped by a crash, a time limit, or deliberately.
+On the second run, every experiment is skipped because the `(alpha, seed)` combinations are already in `_stet_store.csv` (the default store, created automatically in your working directory). This works whether the script was stopped by a crash, a time limit, or deliberately.
 
 ## Check progress
 
 ```python
-import once
-once.status()
+import stet
+stet.status()
 ```
 
 ```
-[once] Store: _once_store.csv  ← created automatically in your working directory
-[once] 3 completed experiments recorded
-[once] Last run: 2024-11-03T14:22:01
-[once] Key columns: alpha, seed
+[stet] Store: _stet_store.csv  ← created automatically in your working directory
+[stet] 3 completed experiments recorded
+[stet] Last run: 2024-11-03T14:22:01
+[stet] Key columns: alpha, seed
 ```
 
-Congratulations — you've seen the core feature of `once` in action!
+Congratulations — you've seen the core feature of `stet` in action!

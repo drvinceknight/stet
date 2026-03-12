@@ -1,4 +1,4 @@
-"""Benchmark the overhead of once across backends and store sizes."""
+"""Benchmark the overhead of stet across backends and store sizes."""
 
 from __future__ import annotations
 
@@ -10,12 +10,12 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
-from once.backends._csv import CsvBackend
-from once.backends._json import JsonBackend
-from once.backends._sqlite import SqliteBackend
+from stet.backends._csv import CsvBackend
+from stet.backends._json import JsonBackend
+from stet.backends._sqlite import SqliteBackend
 
 try:
-    from once.backends._parquet import ParquetBackend
+    from stet.backends._parquet import ParquetBackend
 
     HAS_PARQUET = True
 except ImportError:

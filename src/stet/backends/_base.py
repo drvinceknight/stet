@@ -1,4 +1,4 @@
-"""Abstract base class for once storage backends."""
+"""Abstract base class for stet storage backends."""
 
 from __future__ import annotations
 
@@ -35,7 +35,7 @@ class BaseBackend(ABC):
     def record(self, key_dict: dict[str, Any]) -> None:
         """Write a key combination to the store.
 
-        Adds ``_once_timestamp`` with the current UTC time.
+        Adds ``_stet_timestamp`` with the current UTC time.
 
         Args:
             key_dict: Parameter names and values to record.

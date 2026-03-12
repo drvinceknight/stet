@@ -1,6 +1,6 @@
-# How `once` relates to similar libraries
+# How `stet` relates to similar libraries
 
-Several Python libraries solve adjacent problems to `once`. Understanding how they differ clarifies what `once` is for and why it makes the design choices it does.
+Several Python libraries solve adjacent problems to `stet`. Understanding how they differ clarifies what `stet` is for and why it makes the design choices it does.
 
 ## `joblib.Memory`
 
@@ -10,7 +10,7 @@ Because `joblib.Memory` stores return values, its storage is opaque: results liv
 
 It also has no concept of a key subset. The cache key is the full set of arguments; there is no way to say "these parameters define the experiment identity, but this one is just a computational setting". For research workflows where you want to vary convergence tolerances or iteration counts without invalidating cached results, this is a significant constraint.
 
-`once` is not trying to replace `joblib.Memory` — it is solving a different problem.
+`stet` is not trying to replace `joblib.Memory` — it is solving a different problem.
 
 ## `checkpointing`
 
@@ -22,12 +22,12 @@ The same differences apply. Storage is not human-readable or queryable, return v
 
 `checkpointer` (PyPI) is a more sophisticated decorator focused on *cache correctness*. It can detect when the decorated function's source code or dependencies have changed and invalidate the cache accordingly. It also supports async functions and robust hashing of complex objects such as NumPy arrays and PyTorch tensors.
 
-This solves a different problem. The question `checkpointer` answers is: *is this cached result still valid given that the code may have changed?* The question `once` answers is: *has this parameter combination been run before?* For a researcher running a fixed parameter sweep across sessions, code-aware invalidation is not needed — and the overhead of hashing complex objects would add cost to every call.
+This solves a different problem. The question `checkpointer` answers is: *is this cached result still valid given that the code may have changed?* The question `stet` answers is: *has this parameter combination been run before?* For a researcher running a fixed parameter sweep across sessions, code-aware invalidation is not needed — and the overhead of hashing complex objects would add cost to every call.
 
 ## `memento` (wickerlab)
 
-`memento` is the closest in intent to `once`. It is explicitly designed for researchers running expensive experiments over a parameter grid, with built-in parallelisation and result caching.
+`memento` is the closest in intent to `stet`. It is explicitly designed for researchers running expensive experiments over a parameter grid, with built-in parallelisation and result caching.
 
 The key difference is that `memento` is workflow-prescriptive. You define your parameter grid upfront as a configuration object and pass it to `Memento.run()`, which handles iteration and parallelisation. This requires structuring your experiment around `memento`'s API.
 
-`once` takes the opposite position: it is workflow-neutral. You decorate your function and loop over parameters however you already do — a `for` loop, a list comprehension, a call from a notebook cell, a parallel map. The decorator fits into existing code without restructuring it, and composes with whatever parallelisation approach you already use.
+`stet` takes the opposite position: it is workflow-neutral. You decorate your function and loop over parameters however you already do — a `for` loop, a list comprehension, a call from a notebook cell, a parallel map. The decorator fits into existing code without restructuring it, and composes with whatever parallelisation approach you already use.

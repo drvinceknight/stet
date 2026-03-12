@@ -2,22 +2,22 @@
 
 ## Decorator
 
-::: once._decorator.once
+::: stet._decorator.once
 
 ## Utility functions
 
-::: once._utils.status
+::: stet._utils.status
 
-::: once._utils.reset
+::: stet._utils.reset
 
 ## Backends
 
-::: once.backends._base.BaseBackend
+::: stet.backends._base.BaseBackend
 
-::: once.backends._csv.CsvBackend
+::: stet.backends._csv.CsvBackend
 
-::: once.backends._json.JsonBackend
+::: stet.backends._json.JsonBackend
 
-::: once.backends._sqlite.SqliteBackend
+::: stet.backends._sqlite.SqliteBackend
 
-::: once.backends._parquet.ParquetBackend
+::: stet.backends._parquet.ParquetBackend

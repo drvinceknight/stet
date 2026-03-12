@@ -5,7 +5,7 @@
 Omit `key=` to use every parameter as part of the key:
 
 ```python
-@once.once
+@stet.once
 def run_experiment(alpha, seed, n_iter=1000):
     ...
 ```
@@ -17,7 +17,7 @@ Use this when every parameter genuinely changes the result.
 Use `key=` to exclude parameters that don't define the experiment — for example, computational settings like `n_iter`, `batch_size`, or `verbose`:
 
 ```python
-@once.once(key=['alpha', 'seed'])
+@stet.once(key=['alpha', 'seed'])
 def run_experiment(alpha, seed, n_iter=1000):
     ...
 ```
@@ -38,4 +38,4 @@ run_experiment(alpha=0.1, seed=1)
 run_experiment(alpha=0.1, seed=1, n_iter=500)  # skipped
 ```
 
-See [How once Works](../explanation/how-once-works.md) for a fuller discussion of how parameter identity is determined.
+See [How stet Works](../explanation/how-once-works.md) for a fuller discussion of how parameter identity is determined.

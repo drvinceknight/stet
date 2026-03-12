@@ -1,6 +1,8 @@
-# once
+# stet
 
-**once** is a Python library that solves a common problem in computational research: when a long-running experiment script is re-run — whether after a crash, a time limit, or deliberately to extend a sweep — it should automatically skip any experiments that have already been completed.
+**stet** is a Python library that solves a common problem in computational research: when a long-running experiment script is re-run — whether after a crash, a time limit, or deliberately to extend a sweep — it should automatically skip any experiments that have already been completed.
+
+*Stet* is a Latin proofreading instruction meaning "let it stand" — written beside a correction that should be ignored. When `stet` sees a parameter combination it has already run, it does the same: leave it, it's done.
 
 ## The Problem
 
@@ -11,10 +13,10 @@ You're running a parameter sweep over thousands of combinations. Your script sto
 Decorate your experiment function with `@once`:
 
 ```python
-import once
+import stet
 import numpy as np
 
-@once.once(store='markov_runs.csv', key=['alpha', 'n_states', 'seed'])
+@stet.once(store='markov_runs.csv', key=['alpha', 'n_states', 'seed'])
 def solve_markov(alpha, n_states, seed, n_iter=1000):
     # expensive computation here
     result = run_chain(alpha, n_states, seed, n_iter)
@@ -33,23 +35,23 @@ On restart, any already-completed `(alpha, n_states, seed)` combinations are ski
 ## Installation
 
 ```
-$ uv add once
-$ uv add once[parquet]  # with parquet support
+$ uv add stet
+$ uv add stet[parquet]  # with parquet support
 ```
 
 or
 
 ```
-$ python -m pip install once
-$ python -m pip install once[parquet]  # with parquet support
+$ python -m pip install stet
+$ python -m pip install stet[parquet]  # with parquet support
 ```
 
 ## Quick Start
 
 ```python
-import once
+import stet
 
-@once.once(store='_once_store.csv', key=['alpha', 'beta'])
+@stet.once(store='_stet_store.csv', key=['alpha', 'beta'])
 def run_experiment(alpha, beta, n_steps=1000):
     # your computation here
     pass

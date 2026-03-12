@@ -9,9 +9,9 @@ from typing import Any
 
 import filelock
 
-from once.backends._base import BaseBackend
+from stet.backends._base import BaseBackend
 
-_TABLE = "once_records"
+_TABLE = "stet_records"
 
 
 class SqliteBackend(BaseBackend):
@@ -24,10 +24,10 @@ class SqliteBackend(BaseBackend):
 
     Example:
         ```python
-        from once.backends._sqlite import SqliteBackend
+        from stet.backends._sqlite import SqliteBackend
         from pathlib import Path
 
-        backend = SqliteBackend(Path('_once_store.sqlite'))
+        backend = SqliteBackend(Path('_stet_store.sqlite'))
         backend.record({'alpha': 0.1, 'beta': 2})
         backend.has({'alpha': 0.1, 'beta': 2})  # True
         ```
@@ -43,10 +43,10 @@ class SqliteBackend(BaseBackend):
         return conn
 
     def _ensure_table(self, conn: sqlite3.Connection, columns: list[str]) -> None:
-        cols_sql = ", ".join(f'"{c}" TEXT' for c in [*columns, "_once_timestamp"])
+        cols_sql = ", ".join(f'"{c}" TEXT' for c in [*columns, "_stet_timestamp"])
         conn.execute(f"CREATE TABLE IF NOT EXISTS {_TABLE} ({cols_sql})")
         existing = {row[1] for row in conn.execute(f"PRAGMA table_info({_TABLE})")}
-        for col in [*columns, "_once_timestamp"]:
+        for col in [*columns, "_stet_timestamp"]:
             if col not in existing:
                 conn.execute(f'ALTER TABLE {_TABLE} ADD COLUMN "{col}" TEXT')
 
@@ -80,7 +80,7 @@ class SqliteBackend(BaseBackend):
             key_dict: Parameter names and values to record.
         """
         row = {k: str(v) for k, v in key_dict.items()}
-        row["_once_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
+        row["_stet_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
         with self._lock:
             with self._connect() as conn:
                 self._ensure_table(conn, list(key_dict.keys()))

@@ -11,8 +11,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
-import stet
 
+import stet
 from stet.backends._csv import CsvBackend
 from stet.backends._json import JsonBackend
 from stet.backends._sqlite import SqliteBackend

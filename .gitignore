@@ -22,3 +22,7 @@ site/
 # Default once store files (generated at runtime)
 _once_store.*
 PYPITOKEN
+
+# Benchmarks data
+benchmarks/benchmark_results.csv
+benchmarks/store.csv

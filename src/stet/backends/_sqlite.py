@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -62,7 +63,7 @@ class SqliteBackend(BaseBackend):
         with self._lock:
             if not self.path.exists():
                 return False
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 try:
                     where = " AND ".join(f'"{k}" = ?' for k in key_dict)
                     vals = [str(v) for v in key_dict.values()]
@@ -82,7 +83,7 @@ class SqliteBackend(BaseBackend):
         row = {k: str(v) for k, v in key_dict.items()}
         row["_stet_timestamp"] = datetime.datetime.now(datetime.UTC).isoformat()
         with self._lock:
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 self._ensure_table(conn, list(key_dict.keys()))
                 cols = ", ".join(f'"{c}"' for c in row)
                 placeholders = ", ".join("?" for _ in row)
@@ -100,7 +101,7 @@ class SqliteBackend(BaseBackend):
         with self._lock:
             if not self.path.exists():
                 return []
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 try:
                     rows = conn.execute(f"SELECT * FROM {_TABLE}").fetchall()
                     return [dict(r) for r in rows]
@@ -116,7 +117,7 @@ class SqliteBackend(BaseBackend):
         with self._lock:
             if not self.path.exists():
                 return
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 try:
                     where = " AND ".join(f'"{k}" = ?' for k in key_dict)
                     vals = [str(v) for v in key_dict.values()]
@@ -129,5 +130,5 @@ class SqliteBackend(BaseBackend):
         with self._lock:
             if not self.path.exists():
                 return
-            with self._connect() as conn:
+            with closing(self._connect()) as conn:
                 conn.execute(f"DROP TABLE IF EXISTS {_TABLE}")

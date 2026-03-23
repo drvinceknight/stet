@@ -11,7 +11,10 @@ the decorator's own work (argument binding, key extraction, file lock acquisitio
 
 For each backend and a range of store sizes, we measured:
 
-- **Skip check** (`has()`): the time to look up a key that is present in the store.
+- **Skip check hit** (`has()` returning `True`): the time to look up a key that is
+  present in the store (the skip path).
+- **Skip check miss** (`has()` returning `False`): the time to look up a key that is
+  absent (the run path).
 - **Record** (`record()`): the time to write a new entry to the store.
 
 Each measurement is the mean of 20 repetitions. Store entries each had two key columns
@@ -27,7 +30,7 @@ Each measurement is the mean of 20 repetitions. Store entries each had two key c
 | pandas | 3.0.1 |
 | pyarrow | 23.0.1 |
 | filelock | 3.25.1 |
-| Store sizes tested | 0, 10, 100, 500, 1000, 2000, 5000, 10000 records |
+| Store sizes tested | 0, 10, 100, 500, 1000, 2000, 5000, 10000, 25000, 50000, 100000 records |
 
 Results on different hardware will vary, but the relative shape - SQLite staying flat,
 file-based backends growing linearly - holds regardless of machine.
@@ -41,6 +44,10 @@ file-based backends growing linearly - holds regardless of machine.
 ### Record overhead
 
 ![Record overhead by store size](../img/record_overhead.png)
+
+### Store file size
+
+![Store file size by record count](../img/file_size.png)
 
 ## What the numbers mean
 
@@ -56,6 +63,14 @@ JSON record writes reach ~23 ms because the whole file is rewritten on every cal
 **Parquet has a higher fixed cost than CSV or JSON at small sizes** (~1 ms at 10 records
 vs ~0.6 ms) due to the cost of parsing the binary format, but it scales more gently than
 JSON at larger sizes (~3.8 ms record writes at 10,000 records vs ~23 ms for JSON).
+
+**CSV and JSON grow linearly** with the number of records. JSON is larger because it
+repeats key names on every record. **Parquet has a higher fixed cost** at small store
+sizes but grows more slowly than CSV or JSON at scale due to columnar compression.
+**SQLite stays flat** across the entire benchmark range: at 10,000 records with two
+key columns and a timestamp, all data fits within the initial page allocation (~8 KB).
+SQLite will only grow once records overflow into additional pages, which for typical
+experiment schemas happens well beyond 10,000 records.
 
 ## Practical guidance
 
@@ -75,7 +90,7 @@ situations:
 The benchmarking script lives at `benchmarks/run_benchmarks.py`:
 
 ```
-$ uv run python benchmarks/run_benchmarks.py
+$ uv run --extra parquet python benchmarks/run_benchmarks.py
 ```
 
 It re-generates the plots in `docs/img/`.

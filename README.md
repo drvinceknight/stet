@@ -13,10 +13,12 @@ that have already been completed.
 ```python
 import stet
 
-@stet.once(store='markov_runs.csv', key=['alpha', 'n_states', 'seed'])
+
+@stet.once(store="markov_runs.csv", key=["alpha", "n_states", "seed"])
 def solve_markov(alpha, n_states, seed, n_iter=10_000):
     # expensive computation
     ...
+
 
 for alpha in alphas:
     for n_states in [10, 50, 100]:
@@ -53,34 +55,31 @@ key:
 
 ```python
 @stet.once
-def run_experiment(alpha, seed):
-    ...
+def run_experiment(alpha, seed): ...
 ```
 
 **Named store**: backend selected from file extension (`.csv`, `.json`, `.sqlite`,
 `.parquet`):
 
 ```python
-@stet.once(store='runs.sqlite')
-def run_experiment(alpha, seed):
-    ...
+@stet.once(store="runs.sqlite")
+def run_experiment(alpha, seed): ...
 ```
 
 **Key subset**: only `alpha` and `seed` determine whether a run is skipped; `n_iter` is
 ignored:
 
 ```python
-@stet.once(store='runs.csv', key=['alpha', 'seed'])
-def run_experiment(alpha, seed, n_iter=1000):
-    ...
+@stet.once(store="runs.csv", key=["alpha", "seed"])
+def run_experiment(alpha, seed, n_iter=1000): ...
 ```
 
 ## Utilities
 
 ```python
-stet.status()            # print a summary of completed runs
-stet.reset()             # clear the store
-stet.reset(key_dict={'alpha': '0.1', 'seed': '42'})  # remove one entry
+stet.status()  # print a summary of completed runs
+stet.reset()  # clear the store
+stet.reset(key_dict={"alpha": "0.1", "seed": "42"})  # remove one entry
 ```
 
 ## Storage backends

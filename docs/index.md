@@ -23,13 +23,15 @@ Decorate your experiment function with `@once`:
 import stet
 import numpy as np
 
-@stet.once(store='markov_runs.csv', key=['alpha', 'n_states', 'seed'])
+
+@stet.once(store="markov_runs.csv", key=["alpha", "n_states", "seed"])
 def solve_markov(alpha, n_states, seed, n_iter=1000):
     # expensive computation here
     result = run_chain(alpha, n_states, seed, n_iter)
     # write your own output
-    with open('markov_output.csv', 'a') as f:
+    with open("markov_output.csv", "a") as f:
         f.write(f"{alpha},{n_states},{seed},{result}\n")
+
 
 for alpha in np.linspace(0.01, 1.0, 50):
     for n_states in [10, 50, 100]:
@@ -59,7 +61,8 @@ $ python -m pip install stet[parquet]  # with parquet support
 ```python
 import stet
 
-@stet.once(store='_stet_store.csv', key=['alpha', 'beta'])
+
+@stet.once(store="_stet_store.csv", key=["alpha", "beta"])
 def run_experiment(alpha, beta, n_steps=1000):
     # your computation here
     pass

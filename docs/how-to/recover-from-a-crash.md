@@ -18,14 +18,15 @@ To minimise the risk of output and store getting out of sync, write output *afte
 decorated function returns rather than inside it:
 
 ```python
-@stet.once(key=['alpha', 'seed'])
+@stet.once(key=["alpha", "seed"])
 def run_experiment(alpha, seed):
     return compute_result(alpha, seed)
+
 
 for alpha in alphas:
     for seed in seeds:
         result = run_experiment(alpha=alpha, seed=seed)
-        if result is not None:   # None means the run was skipped
+        if result is not None:  # None means the run was skipped
             write_output(result)
 ```
 

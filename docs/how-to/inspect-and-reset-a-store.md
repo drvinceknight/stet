@@ -5,8 +5,8 @@
 ```python
 import stet
 
-stet.status()                  # default store
-stet.status('markov_runs.csv') # named store
+stet.status()  # default store
+stet.status("markov_runs.csv")  # named store
 ```
 
 Output:
@@ -27,7 +27,7 @@ you like:
 from stet.backends import get_backend
 from pathlib import Path
 
-backend = get_backend(Path('_stet_store.csv'))
+backend = get_backend(Path("_stet_store.csv"))
 records = backend.load()
 print(records[:3])
 ```

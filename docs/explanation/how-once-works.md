@@ -16,9 +16,8 @@ but a durable record of which experiments have already run.
 When you write:
 
 ```python
-@stet.once(store='_stet_store.csv', key=['alpha', 'beta'])
-def run_experiment(alpha, beta, n_steps):
-    ...
+@stet.once(store="_stet_store.csv", key=["alpha", "beta"])
+def run_experiment(alpha, beta, n_steps): ...
 ```
 
 `stet` wraps `run_experiment` so that each call:
@@ -60,14 +59,15 @@ pattern is to return results from the function and write output *after* the call
 returns:
 
 ```python
-@stet.once(store='_stet_store.csv', key=['alpha', 'seed'])
+@stet.once(store="_stet_store.csv", key=["alpha", "seed"])
 def run_experiment(alpha, seed):
     return expensive_computation(alpha, seed)
+
 
 for alpha in alphas:
     for seed in seeds:
         result = run_experiment(alpha=alpha, seed=seed)
-        if result is not None:   # None means the run was skipped
+        if result is not None:  # None means the run was skipped
             write_output(result)
 ```
 

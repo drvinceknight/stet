@@ -36,6 +36,19 @@ def run(x):
 Parallel(n_jobs=4)(delayed(run)(x=i) for i in range(100))
 ```
 
+## Silence skip messages
+
+By default `stet` prints a line each time it skips a completed run. When several
+workers print at once these lines interleave and the output becomes hard to read. We
+turn them off with `verbose=False`:
+
+```python
+@stet.once(store='results.sqlite', key=['alpha', 'seed'], verbose=False)
+def run_experiment(alpha, seed): ...
+```
+
+We can then check progress with `stet.status` once the workers have finished.
+
 ## Recommended backend for parallel workloads
 
 SQLite is recommended for parallel workloads; it has better concurrent write performance

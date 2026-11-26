@@ -27,8 +27,8 @@ for alpha in alphas:
 On restart, any already-completed `(alpha, n_states, seed)` combinations are skipped:
 
 ```
-[once] Skipping solve_markov(alpha=0.01, n_states=10, seed=0)
-[once] Skipping solve_markov(alpha=0.01, n_states=10, seed=1)
+[stet] Skipping solve_markov(alpha=0.01, n_states=10, seed=0)
+[stet] Skipping solve_markov(alpha=0.01, n_states=10, seed=1)
 ...
 ```
 
@@ -96,3 +96,9 @@ stet.reset(key_dict={'alpha': '0.1', 'seed': '42'})  # remove one entry
 
 Full documentation including how-to guides, API reference, and explanation of design
 decisions: [docs](https://vknight.org/stet/).
+
+To serve the docs locally:
+
+```bash
+uv run zensical serve
+```

@@ -37,13 +37,15 @@ def _format_key(func_name: str, key_dict: dict[str, Any]) -> str:
 
 
 class _OnceDecorator:
-    def __init__(self, store: str | Path, key: list[str] | None) -> None:
+    def __init__(self, store: str | Path, key: list[str] | None, verbose: bool) -> None:
         self._store = Path(store)
         self._key = key
+        self._verbose = verbose
 
     def __call__(self, func: Callable[..., Any]) -> Callable[..., Any]:
         backend = get_backend(self._store)
         key = self._key
+        verbose = self._verbose
 
         @functools.wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -51,8 +53,10 @@ class _OnceDecorator:
             key_dict = _extract_key(all_args, key)
 
             if backend.has(key_dict):
-                label = _format_key(getattr(func, "__name__", repr(func)), key_dict)
-                print(f"[stet] Skipping {label}")
+                if verbose:
+                    func_name = getattr(func, "__name__", repr(func))
+                    label = _format_key(func_name, key_dict)
+                    print(f"[stet] Skipping {label}")
                 return None
 
             result = func(*args, **kwargs)
@@ -67,6 +71,7 @@ def once(
     *,
     store: str | Path = "_stet_store.csv",
     key: list[str] | None = None,
+    verbose: bool = True,
 ) -> Any:
     """Decorator that skips already-completed experiment runs.
 
@@ -101,6 +106,10 @@ def once(
             Defaults to ``_stet_store.csv`` in the current directory.
         key: Parameter names that uniquely identify a run. If omitted,
             all parameters are used.
+        verbose: If ``True`` (the default), print a message each time a run
+            is skipped. Set to ``False`` to silence these messages, for
+            example when running across several processes where the output
+            would interleave.
 
     Returns:
         The decorated function (or a decorator if called with arguments).
@@ -115,7 +124,7 @@ def once(
         run_experiment(alpha=0.1, seed=42)
         ```
     """
-    decorator = _OnceDecorator(store=store, key=key)
+    decorator = _OnceDecorator(store=store, key=key, verbose=verbose)
 
     if func is not None:
         return decorator(func)

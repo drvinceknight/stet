@@ -38,3 +38,16 @@ def run_experiment(alpha, seed, n_iter=1000):
 ```
 
 See [Choose Key Parameters](choose-key-parameters.md) for guidance on what to include.
+
+## Silence skip messages
+
+Pass `verbose=False` to stop `stet` printing a message each time a run is skipped:
+
+```python
+@stet.once(store='markov_runs.csv', key=['alpha', 'seed'], verbose=False)
+def run_experiment(alpha, seed, n_iter=1000):
+    ...
+```
+
+This is useful when running in parallel, where messages from different processes
+interleave. See [Use with Multiprocessing](use-with-multiprocessing.md).

@@ -7,11 +7,11 @@ directory. This is fine for single-script projects where everything runs from on
 
 ```python
 @stet.once
-def run_experiment(alpha, seed):
-    ...
+def run_experiment(alpha, seed): ...
 
-stet.status()   # reads _stet_store.csv
-stet.reset()    # clears _stet_store.csv
+
+stet.status()  # reads _stet_store.csv
+stet.reset()  # clears _stet_store.csv
 ```
 
 ## Name the store explicitly
@@ -19,12 +19,12 @@ stet.reset()    # clears _stet_store.csv
 Pass `store=` to control the file name and location:
 
 ```python
-@stet.once(store='markov_runs.csv', key=['alpha', 'seed'])
-def solve_markov(alpha, seed):
-    ...
+@stet.once(store="markov_runs.csv", key=["alpha", "seed"])
+def solve_markov(alpha, seed): ...
 
-stet.status('markov_runs.csv')
-stet.reset('markov_runs.csv')
+
+stet.status("markov_runs.csv")
+stet.reset("markov_runs.csv")
 ```
 
 Explicit names are useful when you have multiple independent experiments in the same

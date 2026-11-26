@@ -42,9 +42,10 @@ which parameter combinations have been run, not what they produced.
 ```python
 import stet
 
+
 @stet.once(key=["alpha", "seed"])
-def run_experiment(alpha, seed):
-    ...
+def run_experiment(alpha, seed): ...
+
 
 for alpha in [0.1, 0.2, 0.3]:
     for seed in range(5):

@@ -78,6 +78,24 @@ def test_skip_message(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> Non
     assert "[stet] Skipping my_func" in out
 
 
+def test_skip_message_silenced(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    store = tmp_path / "store.csv"
+    call_count = 0
+
+    @stet.once(store=store, verbose=False)
+    def my_func(a: int) -> None:
+        nonlocal call_count
+        call_count += 1
+
+    my_func(a=1)
+    my_func(a=1)
+    out = capsys.readouterr().out
+    assert out == ""
+    assert call_count == 1
+
+
 def test_return_value_passthrough(tmp_path: Path) -> None:
     store = tmp_path / "store.csv"
 

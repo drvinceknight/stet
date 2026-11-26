@@ -8,7 +8,7 @@ file extension you pass to `store=`.
 The default. Human-readable, easy to inspect in a spreadsheet.
 
 ```python
-@stet.once(store='_stet_store.csv')
+@stet.once(store="_stet_store.csv")
 def run(alpha, beta): ...
 ```
 
@@ -20,7 +20,7 @@ non-Python tools.
 Pure Python, no extra dependencies beyond `filelock`.
 
 ```python
-@stet.once(store='_stet_store.json')
+@stet.once(store="_stet_store.json")
 def run(alpha, beta): ...
 ```
 
@@ -31,7 +31,7 @@ def run(alpha, beta): ...
 Robust, concurrent-friendly, query-able with standard SQL tools.
 
 ```python
-@stet.once(store='_stet_store.sqlite')
+@stet.once(store="_stet_store.sqlite")
 def run(alpha, beta): ...
 ```
 
@@ -53,7 +53,7 @@ $ python -m pip install stet[parquet]
 ```
 
 ```python
-@stet.once(store='_stet_store.parquet')
+@stet.once(store="_stet_store.parquet")
 def run(alpha, beta): ...
 ```
 

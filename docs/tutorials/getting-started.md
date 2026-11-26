@@ -20,11 +20,13 @@ $ python -m pip install stet
 ```python
 import stet
 
+
 @stet.once
 def run_experiment(alpha, seed, n_iter=500):
     print(f"  Running alpha={alpha}, seed={seed}")
     # simulate work
     import time
+
     time.sleep(0.1)
 ```
 
@@ -65,6 +67,7 @@ or deliberately.
 
 ```python
 import stet
+
 stet.status()
 ```
 

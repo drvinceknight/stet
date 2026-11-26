@@ -26,3 +26,9 @@ PYPITOKEN
 # Benchmarks data
 benchmarks/benchmark_results.csv
 benchmarks/store.csv
+
+# Video for the introduction to stet
+video/
+
+# macOS
+.DS_Store
